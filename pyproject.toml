@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "brics-search"
+version = "0.0.0"
+description = "Various modules and scripts to search within a Biomedical Research Informatics Computing System (BRICS) instance."
+authors = ["Kevin Armengol"]
+readme = "README.md"
+packages = [{include = "brics_search"}]
+
+[tool.poetry.dependencies]
+hydra-core = ">=1.1.0"
+omegaconf = "2.1.2"
+openpyxl = ">=3.0.10"
+pandas = ">=1.5.2"
+pathlib = "^1.0.1"
+pinecone-client = "^2.2.1"
+python = "^3.8.1"
+python-dotenv = "0.21.1"
+requests = ">=2.28.1"
+requests-html = ">=0.10.0"
+sentence-transformers = "^2.2.2"
+transformers = "4.18.0"
+coloredlogs = "^15.0.1"
+holoviews = "^1.16.0"
+panel = {extras = ["tabulator"], version = "^1.1.0"}
+plotly-express = "^0.4.1"
+umap = "^0.1.1"
+ipykernel = "^6.23.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+bs4 = "^0.0.1"
+deptry = "^0.8.0"
+flake8 = "^6.0.0"
+isort = "^5.11.3"
+jupyter = "^1.0.0"
+jupyterlab = "^3.6.1"
+monkeytype = "^23.3.0"
+pre-commit = "^3.0.4"
+radon = "^5.1.0"
+splade = {git = "https://github.com/naver/splade.git"}
+vulture = "^2.7"
+wheel = "^0.38.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
