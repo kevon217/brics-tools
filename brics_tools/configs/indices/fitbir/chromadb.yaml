@@ -1,0 +1,46 @@
+index:
+  filepath_input: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/brics_tools/brics_dd/crossmap/data/FITBIR_DD_published_2023-07-21.csv'
+  embed:
+    filepath_embeddings:
+      title: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/brics_tools/brics_dd/crossmap/setup_faiss_index/data/embeddings/pritamdeka_pubmedbert/title_embeddings_normalized.npy'
+      definition: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/brics_tools/brics_dd/crossmap/setup_faiss_index/data/embeddings/pritamdeka_pubmedbert/definition_embeddings_normalized.npy'
+    id_column: 'variable name'
+    columns: &columns
+      - 'title'
+      - 'definition'
+    model_name: 'pritamdeka/PubMedBERT-mnli-snli-scinli-scitail-mednli-stsb' # "microsoft/BiomedNLP-KRISSBERT-PubMed-UMLS-EL" 
+    batch_size: 256
+    max_length: 100
+    padding: 'max_length'
+    truncation: True
+    normalize_embeddings: True
+    device: 'cpu'
+  collections:
+    names: *columns
+    distance_metric: {"hnsw:space": "cosine"}
+    metadata_columns:
+      - 'variable name'
+      - 'title'
+      - 'element type'
+      - 'definition'
+      - 'short description'
+      - 'datatype'
+      - 'input restriction'
+      - 'minimum value'
+      - 'maximum value'
+      - 'data element concept identifiers'
+      - 'data element concept names'
+      - 'permissible values'
+      - 'permissible value descriptions'
+      - 'permissible value concept identifiers'
+      - 'permissible value concept names'
+      - 'unit of measure'
+      - 'preferred question text'
+      - 'creation date'
+      - 'last change date'
+    storage_path: C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/brics_tools/brics_dd/crossmap/setup_chromadb/fitbir/data_dictionary
+
+
+
+
+

@@ -1,0 +1,6 @@
+defaults:
+  - _self_
+  - apis: null
+  - indices: /fitbir/llamaindex_chromadb
+  - semantic_search: crossmap_dd
+

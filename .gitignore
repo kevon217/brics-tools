@@ -1,21 +1,11 @@
 # User-specific stuff
 .env
-/base_doc-writer.code-profile
-.idea/**/dictionaries
-.idea/**/shelf
-.idea/**/tasks.xml
-.idea/**/usage.statistics.xml
-.idea/**/workspace.xml
-/.idea/
 /dist/
-/docs
-/notebooks/.ipynb_checkpoints
-/notebooks/logger.log
-/notes.txt
 __pycache__/
-/ddcuimap/**/logger.log
-/ddcuimap-workspace.code-workspace
 /.vscode
 /.venv
 /chatGPT4_chats.txt
-/brics_search/brics_dd/data/**
+/scrap/
+/logger.log
+brics_tools/brics_dd/storage/fitbir/**
+*.sqlite3
