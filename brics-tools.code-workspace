@@ -1,35 +1,21 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"python.analysis.typeCheckingMode": "off",
-		"window.zoomLevel": 1,
-		"editor.formatOnSaveMode": "file",
-		"editor.formatOnSave": true,
-		"editor.codeActionsOnSave": {
-			"source.organizeImports": true
-		},
-		"python.linting.pylintEnabled": true,
-		"python.linting.enabled": true,
-		"python.formatting.provider": "none",
-		"explorer.autoRevealExclude": {
-			"**/__pycache__": true
-		},
-		"[python]": {
-			"editor.defaultFormatter": "ms-python.black-formatter"
-		},
-		"files.autoSave": "onWindowChange",
-		"editor.wordWrap": "on",
-		"editor.bracketPairColorization.independentColorPoolPerBracketType": false,
-		"workbench.commandPalette.experimental.suggestCommands": true,
-		"workbench.commandPalette.experimental.useSemanticSimilarity": true,
-		"editor.fontSize": 12
-	},
-	"launch": {
-		"version": "0.2.0",
-		"configurations": []
-	}
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        // "python.pythonPath": "${workspaceFolder}/.venv/bin/python",   // For macOS/Linux
+        "python.pythonPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",   // For Windows
+        "python.analysis.extraPaths": [
+            "${workspaceFolder}/brics_tools",
+            "${workspaceFolder}"
+        ],
+        "terminal.integrated.env.windows": {
+            "PYTHONPATH": "${workspaceFolder}/"
+        },
+        "jupyter.notebookFileRoot": "${workspaceFolder}/"
+
+        
+    }
 }
