@@ -1,0 +1,24 @@
+studyinfo_query_engine:
+  index_id: "fitbir_data_respository"
+  retrievers:
+    DocumentSummaryIndexEmbeddingRetriever:
+      similarity_top_k: 10
+    VectorIndexRetriever:
+      similarity_top_k: 10
+  response_synthesizer:
+    response_mode: 'compact_accumulate'
+    text_qa_template:
+      prompt_type: 'text_qa'
+    refine_template:
+  node_postprocessors:
+    custom:
+    rerank:
+      cross_encoder:
+        model_name: "cross-encoder/stsb-distilroberta-base"
+        top_n: 10
+  llm:
+    llm_service: "OpenAI"  # or "AnotherService"
+    llm_kwargs:
+      model_name: gpt-4 #"gpt-3.5-turbo-16k"
+      temperature: 0.1
+      context_window: 4096

@@ -1,4 +1,0 @@
-pinecone:
-  index_info:
-    apiKey: &apiKey
-    environment: &environment

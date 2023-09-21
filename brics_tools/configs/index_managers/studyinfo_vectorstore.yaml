@@ -1,0 +1,28 @@
+studyinfo_vectorstore_index:
+  index_id: 'FITBIR-Data-Repository_VectorStoreIndex'
+  filepath_input: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/storage/data_repository/studies.csv'
+  storage_context:
+    storage_path_root: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/storage/data_repository/'
+    storage_paths_indices:
+  summary: "FITBIR Data Repository Study Information"
+  collections:
+    embed:
+      id_column: 'id'
+      columns: &columns
+        - 'abstractText'
+      model_name: 'BAAI/bge-large-en'
+      encode_kwargs: {"normalize_embeddings": True}
+      model_kwargs:
+        batch_size: 50
+        device: 'cpu'
+        normalize_embeddings: True
+      chunk_size: 512
+    vectordb:
+      distance_metric: {"hnsw:space": "cosine"}
+    llm:
+      llm_service: "OpenAI"  # or "AnotherService"
+      llm_kwargs:
+        model_name: "gpt-3.5-turbo-16k"
+        temperature: 0.1
+        context_window: 4096
+    metadata_columns:

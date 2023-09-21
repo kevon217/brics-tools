@@ -1,0 +1,22 @@
+studyinfo_question_dataset:
+  prompt: "You are a Traumatic Brain Injury researcher interested in exploring studies in a Data Repository to find datasets that align with your research objectives. Based on the provided study abstract, formulate a question that captures a key aspect of the study that would be most relevant to your research needs. Please keep the question specific to the information available in the context."
+  service_context:
+    generator:
+      llm:
+        llm_service: "OpenAI"  # or "AnotherService"
+        llm_kwargs:
+          model_name: "gpt-3.5-turbo"
+          temperature: 0.1
+        context_window: 4096
+      chunk_size: 1024
+    evaluator:
+      llm:
+        llm_service: "OpenAI"  # or "AnotherService"
+        llm_kwargs:
+          model_name: "gpt-4"
+          temperature: 0.1
+        context_window: 4096
+      chunk_size: 1024
+  storage_context:
+    storage_path_root: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/examples/data_repository/storage/evaluation'
+    filename: 'studyinfo_question_dataset.txt'

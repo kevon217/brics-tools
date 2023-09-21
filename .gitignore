@@ -9,3 +9,4 @@ __pycache__/
 /logger.log
 brics_tools/brics_dd/storage/fitbir/*.sqlite3
 *.sqlite3
+.idea

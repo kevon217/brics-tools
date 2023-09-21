@@ -1,0 +1,28 @@
+studyinfo_nodes:
+  text_splitter:
+    chunk_size: 512
+    chunk_overlap: 20
+  include_prev_next_rel: True
+  metadata_extractor:
+    include: True
+    keywords: 10
+  batch_size: 5
+  service_context:
+    llm:
+      llm_service: "OpenAI"  # or "AnotherService"
+      llm_kwargs:
+        model_name: "gpt-3.5-turbo-16k"
+        temperature: 0.1
+      context_window: 4096
+    embedding:
+      id_column: 'id'
+      columns: &columns
+        - 'abstractText'
+      model_name: 'BAAI/bge-large-en'
+      encode_kwargs: {"normalize_embeddings": True}
+      model_kwargs:
+        batch_size: 50
+        device: 'cpu'
+        normalize_embeddings: True
+      max_tokens: 512
+      chunk_size: 1024

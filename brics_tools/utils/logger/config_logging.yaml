@@ -60,6 +60,14 @@ loggers:
     level: INFO
     handlers: [file, console]
     propagate: False
+  studysearch_app_logger:
+    level: INFO
+    handlers: [file, console]
+    propagate: False
+  query_engine_logger:
+    level: INFO
+    handlers: [file, console]
+    propagate: False
 root:
     level: INFO
     handlers: [file, console]

@@ -1,0 +1,18 @@
+studyinfo_document:
+  id_column: 'id'
+  text_column: 'abstractText'
+  metadata_include:
+    method: 'list'
+    columns: # You can either pre-define this list specify auto to get set intersection of all columns and exclude list
+    - 'title'
+    - 'id'
+    - 'studyType'
+    - 'fundingSource'
+    - 'keywordSet'
+    - 'submissionType'
+  metadata_exclude:
+    method: 'auto' # You can either pre-define this list specify auto to get set difference of all columns and include list
+    columns: []
+  metadata_separator: '::'
+  metadata_template: "{key}=>{value}"
+  text_template: "Metadata: {metadata_str}\n-----\nContent: {content}"

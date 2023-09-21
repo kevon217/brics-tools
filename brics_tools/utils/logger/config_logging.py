@@ -1,6 +1,6 @@
 """
 
-Logging configuration for the ddcuimap package.
+Logging configuration for the brics_tools package.
 
 """
 

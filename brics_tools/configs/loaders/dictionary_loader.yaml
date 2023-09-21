@@ -1,0 +1,12 @@
+dictionary_loader:
+  api:
+    endpoint_url: "https://fitbir.nih.gov/gateway//dictionary-api/dataElement/csv"
+    login_url: "https://fitbir.nih.gov/gateway/authentication/user/login"
+
+  storage:
+    storage_path_root: "./examples/data_dictionary/storage"
+    filename: "FITBIR_DD_published_2023-07-21.csv"
+
+  authentication:
+    prompt_username: true
+    prompt_password: true

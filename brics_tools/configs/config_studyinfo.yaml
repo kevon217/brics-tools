@@ -1,0 +1,29 @@
+defaults:
+  - _self_
+  - loaders: studyinfo_loader
+  - preprocessors: studyinfo_preprocessor
+  - document_creators: studyinfo_document
+  - node_parsers: studyinfo_nodes
+  - index_managers:
+    - studyinfo_vectorstore
+    - studyinfo_summary
+  - query_engines: studyinfo_query_engine
+  - evaluators: studyinfo_question_dataset
+
+  # - vectordbs: chromadb
+  # - semantic_search: crossmap_dd
+  # - indices: /fitbir/data_dictionary/llamaindex_chromadb_PubMedBERT.yaml
+
+# General settings can also go here
+settings:
+  log_level: 'info'
+
+
+
+# defaults:
+#   - _self_
+#   - apis: null
+#   - indices: /fitbir/data_repository/llamaindex_chromadb_bge-large-en
+#   - semantic_search: umls_pinecone
+#   - custom: title_def
+#   - curation: LLM/qa_multiple_choice
