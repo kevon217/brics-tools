@@ -5,8 +5,9 @@ General helper functions for UI and configuration components of scripts.
 """
 
 import os
-import tkinter as tk
-from tkinter import filedialog
+
+# import tkinter as tk
+# from tkinter import filedialog
 from pathlib import Path
 from omegaconf import OmegaConf
 from hydra import compose, initialize
@@ -56,64 +57,64 @@ def load_config(filepath):
 # FOLDER/DIRECTORY FUNCTIONS
 
 
-@log(msg="Creating new folder")
-def create_folder(folder_path):
-    """Will create new folder and append numbers incrementally if folder_path already exists"""
+# @log(msg="Creating new folder")
+# def create_folder(folder_path):
+#     """Will create new folder and append numbers incrementally if folder_path already exists"""
 
-    if type(folder_path) == str:
-        adjusted_folder_path = folder_path
-        folder_found = os.path.isdir(adjusted_folder_path)
-        counter = 0
-        while folder_found:
-            counter = counter + 1
-            adjusted_folder_path = folder_path + " (" + str(counter) + ")"
-            folder_found = os.path.isdir(adjusted_folder_path)
-        os.mkdir(adjusted_folder_path)
-        utils_logger.info(f"Folder created: {adjusted_folder_path}")
-    elif isinstance(folder_path, Path):
-        # using pathlib and not os check if folder_path already exists, append numbers incrementally
-        adjusted_folder_path = folder_path
-        folder_found = folder_path.exists()
-        counter = 0
-        while folder_found:
-            counter = counter + 1
-            adjusted_folder_path = folder_path.parent / (
-                folder_path.name + " (" + str(counter) + ")"
-            )
-            folder_found = adjusted_folder_path.exists()
-        adjusted_folder_path.mkdir(parents=True, exist_ok=True)
-        utils_logger.info(f"Folder created: {adjusted_folder_path}")
-    else:
-        raise TypeError("folder_path must be a string or pathlib Path object")
+#     if type(folder_path) == str:
+#         adjusted_folder_path = folder_path
+#         folder_found = os.path.isdir(adjusted_folder_path)
+#         counter = 0
+#         while folder_found:
+#             counter = counter + 1
+#             adjusted_folder_path = folder_path + " (" + str(counter) + ")"
+#             folder_found = os.path.isdir(adjusted_folder_path)
+#         os.mkdir(adjusted_folder_path)
+#         utils_logger.info(f"Folder created: {adjusted_folder_path}")
+#     elif isinstance(folder_path, Path):
+#         # using pathlib and not os check if folder_path already exists, append numbers incrementally
+#         adjusted_folder_path = folder_path
+#         folder_found = folder_path.exists()
+#         counter = 0
+#         while folder_found:
+#             counter = counter + 1
+#             adjusted_folder_path = folder_path.parent / (
+#                 folder_path.name + " (" + str(counter) + ")"
+#             )
+#             folder_found = adjusted_folder_path.exists()
+#         adjusted_folder_path.mkdir(parents=True, exist_ok=True)
+#         utils_logger.info(f"Folder created: {adjusted_folder_path}")
+#     else:
+#         raise TypeError("folder_path must be a string or pathlib Path object")
 
-    return adjusted_folder_path
-
-
-def manage_tk_dialogbox(tk):
-    """Brings tk dialogbox to the front of screen"""
-
-    root = tk.Tk()
-    root.withdraw()
-    root.focus_force()
-    root.attributes("-topmost", True)
-    return root
+#     return adjusted_folder_path
 
 
-@log(msg="Choosing input file")
-def choose_file(prompt: str):
-    """Opens up tk filedialog box to allow user to choose a local file"""
+# def manage_tk_dialogbox(tk):
+#     """Brings tk dialogbox to the front of screen"""
 
-    root = manage_tk_dialogbox(tk)
-    fp = filedialog.askopenfilename(parent=root, title=prompt)
-    utils_logger.info(f"File chosen: {fp}")
-    return fp
+#     root = tk.Tk()
+#     root.withdraw()
+#     root.focus_force()
+#     root.attributes("-topmost", True)
+#     return root
 
 
-@log(msg="Choosing input directory")
-def choose_dir(prompt: str):
-    """Opens up tk filedialog box to allow user to choose a local directory"""
+# @log(msg="Choosing input file")
+# def choose_file(prompt: str):
+#     """Opens up tk filedialog box to allow user to choose a local file"""
 
-    root = manage_tk_dialogbox(tk)
-    dp = filedialog.askdirectory(parent=root, title=prompt)
-    utils_logger.info(f"Directory chosen: {dp}")
-    return dp
+#     root = manage_tk_dialogbox(tk)
+#     fp = filedialog.askopenfilename(parent=root, title=prompt)
+#     utils_logger.info(f"File chosen: {fp}")
+#     return fp
+
+
+# @log(msg="Choosing input directory")
+# def choose_dir(prompt: str):
+#     """Opens up tk filedialog box to allow user to choose a local directory"""
+
+#     root = manage_tk_dialogbox(tk)
+#     dp = filedialog.askdirectory(parent=root, title=prompt)
+#     utils_logger.info(f"Directory chosen: {dp}")
+#     return dp
