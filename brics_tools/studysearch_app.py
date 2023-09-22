@@ -9,7 +9,7 @@ from brics_tools.index_tools.query_engines.studyinfo_query_engine import (
     StudyInfoQueryEngine,
 )
 from brics_tools.index_tools.prompts.studyinfo_prompts import STUDYINFO_QA_PROMPT
-from brics_tools.apps import logger, log, copy_log
+from brics_tools import logger, log, copy_log
 
 # Page Config
 st.set_page_config(layout="wide")
