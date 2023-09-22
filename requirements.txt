@@ -7,3 +7,4 @@ sentence-transformers==2.2.2
 chromadb==0.4.4
 llama-index==0.7.19
 streamlit==1.26.0
+sqlalchemy==2.0.20
