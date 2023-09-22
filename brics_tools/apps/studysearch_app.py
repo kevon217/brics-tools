@@ -275,11 +275,14 @@ with st.form("query_form"):
         data = {
             "Study Title": study_titles,
             "Study ID": study_ids,
-            "Similarity Score": similarity_scores,
+            "Distance Score": similarity_scores,
             "Abstract": study_abstracts,
         }
 
         df = pd.DataFrame(data)
+        df = df.sort_values(by=["Distance Score"], ascending=True).reset_index(
+            drop=True
+        )
 
         # Display DataFrame of retrieved results
         st.subheader("Retrieved Studies")
