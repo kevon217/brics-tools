@@ -1,9 +1,4 @@
 import os
-
-# import sys
-# from pathlib import Path
-
-# sys.path.append(str(Path(__file__).resolve().parent.parent))
 import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
@@ -23,7 +18,7 @@ st.set_page_config(layout="wide")
 logger.info("Initializing Streamlit app")
 
 # App title
-st.title("Data Repository Study Information Query")
+st.header("FITBIR Data Repository Study Information Query", divider="gray")
 
 # Initialize session state for engine_status if it's not already initialized
 if "engine_status" not in st.session_state:
@@ -54,38 +49,43 @@ if not st.session_state.engine_status["initialized"]:
     logger.info("Query engine initialized")
 
 # Initialize session state
+if "query_mode" not in st.session_state:
+    st.session_state.query_mode = "Retrieval"
+if "query_counter" not in st.session_state:
+    st.session_state.query_counter = 0
 if "top_k" not in st.session_state:
     st.session_state.top_k = 10
+if "last_top_k_retriever" not in st.session_state:
+    st.session_state.last_top_k_retriever = 10
+if "last_top_k_rag" not in st.session_state:
+    st.session_state.last_top_k_rag = 10
+if "df" not in st.session_state:
+    st.session_state.df = pd.DataFrame()
 if "llm_prompt_text" not in st.session_state:
     st.session_state.llm_prompt_text = STUDYINFO_QA_PROMPT.get_template()
 if "last_llm_prompt_text" not in st.session_state:
     st.session_state.last_llm_prompt_text = STUDYINFO_QA_PROMPT.get_template()
 if "llm_prompt_text_area_key" not in st.session_state:
     st.session_state.llm_prompt_text_area_key = 1
-if "history" not in st.session_state:
-    st.session_state.history = []
-if "query_mode" not in st.session_state:
-    st.session_state.query_mode = "Retrieval"
-if "last_top_k_retriever" not in st.session_state:
-    st.session_state.last_top_k_retriever = 10
-if "last_top_k_rag" not in st.session_state:
-    st.session_state.last_top_k_rag = 10
 if "last_llm_model_name" not in st.session_state:
     st.session_state.last_llm_model_name = "gpt-3.5-turbo-16k"
 if "temperature" not in st.session_state:
     st.session_state.temperature = 0.0
+if "history" not in st.session_state:
+    st.session_state.history = []
 
 
 # Display history
 if st.session_state.history:
     st.header("Query History")
     for item in st.session_state.history:
-        st.subheader("Query:")
+        query_counter = item["query_counter"]
+        st.subheader(f":green[Query: {query_counter}]")
         st.text(item["query"])
-        st.subheader("LLM Response:")
+        st.subheader(":red[LLM Response:]")
         st.write(item["response"])
         st.subheader("Retrieved Studies:")
-        st.write(pd.DataFrame(item["retrieved_studies"]))
+        st.dataframe(pd.DataFrame(item["retrieved_studies"]))
 
 # Sidebar for settings
 st.sidebar.header("Settings", divider="green")
@@ -182,7 +182,7 @@ if st.sidebar.button("Reload Default Prompt"):
 # Initialize or update the engine with the API key and other settings
 engine = initialize_engine()
 
-with st.form("query_form"):
+with st.form("query_form", clear_on_submit=True):
     # User text input for the query
     user_query = st.text_input(
         "Please enter your query about studies in the Data Repository:"
@@ -220,22 +220,22 @@ with st.form("query_form"):
             logger.info("Engine update needed due to configuration changes")
             if st.session_state.query_mode == "Retrieval":
                 if new_top_k != st.session_state.top_k:
-                    st.warning("Updating Retriever engine")
-                    engine.create_retriever_only_engine(
+                    with st.status("Updating Retriever engine"):
+                        engine.create_retriever_only_engine(
+                            similarity_top_k=new_top_k,
+                            rerank_top_n=new_top_k,
+                            response_mode="no_text",
+                            text_qa_template=None,
+                        )
+            else:
+                with st.status("Updating-Retrieval Augmented Generation (RAG) engine"):
+                    engine.create_retriever_query_engine(
+                        model_name=model_name,
+                        temperature=temperature,
                         similarity_top_k=new_top_k,
                         rerank_top_n=new_top_k,
-                        response_mode="no_text",
-                        text_qa_template=None,
+                        text_qa_template=llm_prompt_text,
                     )
-            else:
-                st.warning("Updating-Retrieval Augmented Generation (RAG) engine")
-                engine.create_retriever_query_engine(
-                    model_name=model_name,
-                    temperature=temperature,
-                    similarity_top_k=new_top_k,
-                    rerank_top_n=new_top_k,
-                    text_qa_template=llm_prompt_text,
-                )
 
         # Update last used top_k and llm_prompt_text
         if st.session_state.query_mode == "Retrieval":
@@ -252,22 +252,17 @@ with st.form("query_form"):
         # Perform query using the current engine
         if st.session_state.query_mode == "Retrieval":
             logger.info("Running Retriever engine")
-            st.warning("Running Retriever engine")
-            result = engine.retriever_engine.query(user_query)
-            result.response = 'No LLM response in "Retrieval" query mode.'
+            with st.status("Running Retriever engine"):
+                result = engine.retriever_engine.query(user_query)
+                result.response = 'No LLM response in "Retrieval" query mode.'
         else:
             logger.info("Running Retrieval Augmented Generation (RAG) engine")
-            st.warning("Running Retrieval Augmented Generation (RAG) engine")
-            result = engine.query_engine.query(user_query)
-            st.session_state.last_llm_prompt_text = (
-                llm_prompt_text  # Set the last llm_prompt_text
-            )
-            st.session_state.llm_prompt_text = llm_prompt_text
-
-        # Display LLM response
-        st.subheader("LLM Response")
-        logger.info(f"LLM Response received: {result.response}")
-        st.write(result.response)
+            with st.status("Running Retrieval Augmented Generation (RAG) engine"):
+                result = engine.query_engine.query(user_query)
+                st.session_state.last_llm_prompt_text = (
+                    llm_prompt_text  # Set the last llm_prompt_text
+                )
+                st.session_state.llm_prompt_text = llm_prompt_text
 
         # Process source_nodes to create a DataFrame
         logger.info("Processing source_nodes to create a DataFrame")
@@ -288,17 +283,37 @@ with st.form("query_form"):
         df = df.sort_values(by=["Distance Score"], ascending=True).reset_index(
             drop=True
         )
+        st.session_state.df = df
+
+        # Display query
+        st.subheader("Query")
+        st.write(user_query)
+
+        # Display LLM response
+        st.subheader("LLM Response")
+        logger.info(f"LLM Response received: {result.response}")
+        st.write(result.response)
 
         # Display DataFrame of retrieved results
         st.subheader("Retrieved Studies")
-        st.write(df)
+        st.dataframe(df, use_container_width=True)
 
         # Append to history
         logger.info("Appending query and results to history")
+        st.session_state.query_counter += 1
         st.session_state.history.append(
             {
                 "query": user_query,
+                "query_counter": st.session_state.query_counter,
                 "response": result.response,
                 "retrieved_studies": df.to_dict(),
             }
         )
+
+
+st.download_button(
+    label="Download last query results",
+    data=st.session_state.df.to_csv(),
+    file_name="retrieved_studies.csv",
+    mime="text/csv",
+)
