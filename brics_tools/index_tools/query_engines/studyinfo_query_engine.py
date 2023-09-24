@@ -34,9 +34,10 @@ from brics_tools.index_tools.index_managers.studyinfo_summary_manager import (
 from brics_tools.index_tools.index_managers.studyinfo_vectorstore_manager import (
     StudyInfoVectorStoreIndexManager,
 )
-from brics_tools.index_tools.node_postprocessors.studyinfo_node_postprocessor import (
-    NodePostprocessorCosineSimilarityTempFix,
-)
+
+# from brics_tools.index_tools.node_postprocessors.studyinfo_node_postprocessor import (
+#     NodePostprocessorCosineSimilarityTempFix,
+# )
 from brics_tools.index_tools.prompts.studyinfo_prompts import STUDYINFO_QA_PROMPT
 from brics_tools.index_tools.service_contexts.api_key_context_manager import (
     use_openai_api_key,

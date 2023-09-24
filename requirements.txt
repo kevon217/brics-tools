@@ -75,7 +75,7 @@ pydeck==0.8.0 ; python_full_version >= "3.8.1" and python_full_version != "3.9.7
 pygments==2.16.1 ; python_full_version >= "3.8.1" and python_full_version != "3.9.7" and python_version < "3.12"
 pypika==0.48.9 ; python_full_version >= "3.8.1" and python_full_version != "3.9.7" and python_version < "3.12"
 pyreadline3==3.4.1 ; sys_platform == "win32" and python_full_version >= "3.8.1" and python_full_version != "3.9.7" and python_version < "3.12"
-pysqlite3-binary ;
+pysqlite3-binary==0.5.2 ;
 python-dateutil==2.8.2 ; python_full_version >= "3.8.1" and python_full_version != "3.9.7" and python_version < "3.12"
 python-dotenv==1.0.0 ; python_full_version >= "3.8.1" and python_full_version != "3.9.7" and python_version < "3.12"
 pytz==2023.3.post1 ; python_full_version >= "3.8.1" and python_full_version != "3.9.7" and python_version < "3.12"

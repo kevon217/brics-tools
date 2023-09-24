@@ -4,11 +4,15 @@ import pandas as pd
 from dotenv import load_dotenv
 import openai
 
-# these three lines swap the stdlib sqlite3 lib with the pysqlite3 package for chromadb compatibility with streamlit
-__import__("pysqlite3")
 import sys
 
-sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+if sys.platform == "Linux":
+    # these three lines swap the stdlib sqlite3 lib with the pysqlite3 package for chromadb compatibility with streamlit
+    logger.info(
+        "Swapping stdlib sqlite3 with pysqlite3 for chromadb-linux compatibility"
+    )
+    __import__("pysqlite3")
+    sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 
 from brics_tools.utils import helper
 from brics_tools.index_tools.query_engines.studyinfo_query_engine import (
