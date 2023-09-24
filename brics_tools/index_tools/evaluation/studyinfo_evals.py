@@ -15,6 +15,7 @@ from llama_index import ServiceContext, set_global_service_context
 from llama_index.llms import OpenAI
 
 from brics_tools.utils import helper
+from brics_tools.utils.llm_utils.tokens import openai_api_calculate_cost
 from brics_tools.index_tools.loaders.studyinfo_loader import StudyInfoLoader
 from brics_tools.index_tools.document_creators.studyinfo_document_creator import (
     StudyInfoDocumentCreator,
