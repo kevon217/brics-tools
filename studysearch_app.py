@@ -1,12 +1,14 @@
 import os
+import sys
 import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
 import openai
 
-import sys
+from brics_tools.apps import logger, log, copy_log
 
-if sys.platform == "Linux":
+logger.info(f"sys.platform: {sys.platform}")
+if sys.platform != "win32":
     # these three lines swap the stdlib sqlite3 lib with the pysqlite3 package for chromadb compatibility with streamlit
     logger.info(
         "Swapping stdlib sqlite3 with pysqlite3 for chromadb-linux compatibility"
@@ -19,7 +21,7 @@ from brics_tools.index_tools.query_engines.studyinfo_query_engine import (
     StudyInfoQueryEngine,
 )
 from brics_tools.index_tools.prompts.studyinfo_prompts import STUDYINFO_QA_PROMPT
-from brics_tools.apps import logger, log, copy_log
+
 
 # Page Config
 st.set_page_config(layout="wide")
