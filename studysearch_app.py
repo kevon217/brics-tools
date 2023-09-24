@@ -194,7 +194,7 @@ if st.sidebar.button("Reload Default Prompt"):
 # Initialize or update the engine with the API key and other settings
 engine = initialize_engine()
 
-with st.form("query_form", clear_on_submit=True):
+with st.form("query_form", clear_on_submit=False):
     # User text input for the query
     user_query = st.text_input(
         "Please enter your query about studies in the Data Repository:"
@@ -292,7 +292,7 @@ with st.form("query_form", clear_on_submit=True):
         }
 
         df = pd.DataFrame(data)
-        df = df.sort_values(by=["Distance Score"], ascending=True).reset_index(
+        df = df.sort_values(by=["Distance Score"], ascending=False).reset_index(
             drop=True
         )
         st.session_state.df = df
