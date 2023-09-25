@@ -196,8 +196,8 @@ engine = initialize_engine()
 
 with st.form("query_form", clear_on_submit=False):
     # User text input for the query
-    user_query = st.text_input(
-        "Please enter your query about studies in the Data Repository:"
+    user_query = str(
+        st.text_input("Please enter your query about studies in the Data Repository:")
     )
     # Form submit button
     submitted = st.form_submit_button("Execute Query")
