@@ -264,12 +264,12 @@ with st.form("query_form", clear_on_submit=False):
         if st.session_state.query_mode == "Retrieval":
             logger.info("Running Retriever engine")
             with st.status("Running Retriever engine"):
-                result = engine.retriever_engine.query(QueryBundle(user_query))
+                result = engine.retriever_engine.query(user_query)
                 result.response = 'No LLM response in "Retrieval" query mode.'
         else:
             logger.info("Running Retrieval Augmented Generation (RAG) engine")
             with st.status("Running Retrieval Augmented Generation (RAG) engine"):
-                result = engine.query_engine.query(QueryBundle(user_query))
+                result = engine.query_engine.query(user_query)
                 st.session_state.last_llm_prompt_text = (
                     llm_prompt_text  # Set the last llm_prompt_text
                 )

@@ -35,6 +35,7 @@ from brics_tools.index_tools.index_loaders.studyinfo_index_loader import (
 from brics_tools.index_tools.query_engines.studyinfo_query_engine import (
     StudyInfoQueryEngine,
 )
+from llama_index.indices.query.schema import QueryBundle
 
 
 load_dotenv()
@@ -109,10 +110,12 @@ studyinfo_summary_mngr.persist_index()
 engine = StudyInfoQueryEngine(cfg)
 # engine.init_summary_index()
 engine.init_vector_index()
-engine.init_node_postprocessors()
+# engine.init_node_postprocessors()
 
 rtrvr = engine.create_retriever_only_engine(similarity_top_k=5, response_mode="no_text")
 rag = engine.create_retriever_query_engine()
+rtrvr = engine.retriever_engine
+rag = engine.query_engine
 
 # engine.create_query_engine(similarity_top_k=100, response_mode='no_text')
 # r1 = engine.query_engine.query("What is the TRACK-TBI study about?")
@@ -128,12 +131,20 @@ cbh = engine.vector_index_manager.callback_handler
 
 # TESTS
 r1 = rtrvr.query("risk factors associated with PTE")
+r1 = rtrvr.retrieve(QueryBundle("TRACK-TBI"))
 r1 = rtrvr.query("TBD")
 r1 = rtrvr.query("informatics")
 scores = []
 for n in r1.source_nodes:
     title = n.metadata["title"]
     scores.append((title, n.score))
+
+rag1 = rag.query("TRACK-TBI")
+scores = []
+for n in rag1.source_nodes:
+    title = n.metadata["title"]
+    scores.append((title, n.score))
+print(scores)
 
 sum_retr = engine.retrievers["DocumentSummaryIndexEmbeddingRetriever"]
 sr1 = sum_retr.retrieve("What is the TRACK-TBI study about?")

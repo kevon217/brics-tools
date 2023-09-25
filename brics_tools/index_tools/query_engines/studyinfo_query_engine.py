@@ -97,7 +97,7 @@ class StudyInfoQueryEngine:
         self.vector_index_manager = vector_index_manager
         index = vector_index_manager.index
         self.vector_index = index
-        return index
+        # return index
 
     def init_vector_retriever(self, similarity_top_k=None):
         similarity_top_k = (
@@ -111,7 +111,7 @@ class StudyInfoQueryEngine:
             index=self.vector_index, similarity_top_k=similarity_top_k
         )
         self.retriever = retriever
-        return retriever
+        # return retriever
 
     def init_node_postprocessors(self, rerank_top_n=None):
         rerank_top_n = (
@@ -128,7 +128,7 @@ class StudyInfoQueryEngine:
             )
         ]  # TODO: add classes to config for more flexibility
         self.node_postprocessors = node_postprocessors
-        return node_postprocessors
+        # return node_postprocessors
 
     def postprocess(self, nodes, user_query):
         logger.info("Postprocessing nodes")
@@ -167,7 +167,7 @@ class StudyInfoQueryEngine:
             callback_manager=self.callback_manager,
         )
         self.response_synthesizer = response_synthesizer
-        return response_synthesizer
+        # return response_synthesizer
 
     def create_retriever_only_engine(
         self,
@@ -177,19 +177,19 @@ class StudyInfoQueryEngine:
         text_qa_template=None,
     ):
         logger.info("Creating Retriever-only Engine")
-        retriever = self.init_vector_retriever(similarity_top_k=similarity_top_k)
-        node_postprocessors = self.init_node_postprocessors(rerank_top_n=rerank_top_n)
+        self.init_vector_retriever(similarity_top_k=similarity_top_k)
+        self.init_node_postprocessors(rerank_top_n=rerank_top_n)
         # synthesizer = self.init_response_synthesizer(response_mode=response_mode,text_qa_template=text_qa_template)
 
         retriever_engine = RetrieverQueryEngine(
-            retriever=retriever,
+            retriever=self.retriever,
             response_synthesizer=None,
             node_postprocessors=self.node_postprocessors,
             callback_manager=self.callback_manager,  # Or however you manage this
         )
         self.retriever_engine = retriever_engine
         # self.init_node_postprocessors(rerank_top_n=rerank_top_n)
-        return retriever_engine
+        # return retriever_engine
 
     def create_retriever_query_engine(
         self,
@@ -203,20 +203,20 @@ class StudyInfoQueryEngine:
         logger.info("Creating Retriever Query Engine")
         self.init_llm(model_name=model_name, temperature=temperature)
         self.init_service_context()
-        retriever = self.init_vector_retriever(similarity_top_k=similarity_top_k)
-        node_postprocessors = self.init_node_postprocessors(rerank_top_n=rerank_top_n)
-        synthesizer = self.init_response_synthesizer(
+        self.init_vector_retriever(similarity_top_k=similarity_top_k)
+        self.init_node_postprocessors(rerank_top_n=rerank_top_n)
+        self.init_response_synthesizer(
             response_mode=response_mode, text_qa_template=text_qa_template
         )
 
         query_engine = RetrieverQueryEngine(
-            retriever=retriever,
-            response_synthesizer=synthesizer,
+            retriever=self.retriever,
+            response_synthesizer=self.response_synthesizer,
             node_postprocessors=self.node_postprocessors,
             callback_manager=self.callback_manager,  # Or however you manage this
         )
         self.query_engine = query_engine
-        return query_engine
+        # return query_engine
 
     # def init_summary_index(self):
     #     # Initialize StudyInfoSummaryIndexManager and load the summary index
