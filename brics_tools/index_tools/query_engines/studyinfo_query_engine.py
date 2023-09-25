@@ -121,11 +121,6 @@ class StudyInfoQueryEngine:
         logger.info(
             f"Initializing Node Postprocessors with rerank_top_n = {rerank_top_n}"
         )
-        # node_postprocessors = [#NodePostprocessorCosineSimilarityTempFix(),
-        #                             SentenceTransformerRerank(model=self.config.query_engines.studyinfo_query_engine.node_postprocessors.rerank.cross_encoder.model_name,
-        #                                                       top_n=rerank_top_n),
-        #                             #NodePostprocessorCosineSimilarityTempFix()
-        #                             ] # TODO: add classes to config for more flexibility
         node_postprocessors = [
             SentenceTransformerRerank(
                 model=self.config.query_engines.studyinfo_query_engine.node_postprocessors.rerank.cross_encoder.model_name,

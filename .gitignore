@@ -10,3 +10,4 @@ __pycache__/
 .idea
 /todo.md
 /c
+**/*.bin

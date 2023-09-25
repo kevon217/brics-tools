@@ -4,7 +4,7 @@ import streamlit as st
 import pandas as pd
 from dotenv import load_dotenv
 import openai
-
+from llama_index.indices.query.schema import QueryBundle
 from brics_tools.apps import logger, log, copy_log
 
 logger.info(f"sys.platform: {sys.platform}")
@@ -147,7 +147,7 @@ os.environ["OPENAI_API_KEY"] = openai_api_key
 
 model_name = st.sidebar.selectbox(
     "Select Language Model",
-    ("gpt-3.5-turbo-16k", "gpt-4"),
+    ("gpt-3.5-turbo-16k", "gpt-3.5-turbo-instruct", "gpt-4"),
     index=0 if st.session_state.last_llm_model_name == "gpt-3.5-turbo-16k" else 1,
     key="model_name_select",
 )
@@ -199,7 +199,6 @@ with st.form("query_form", clear_on_submit=False):
     user_query = st.text_input(
         "Please enter your query about studies in the Data Repository:"
     )
-
     # Form submit button
     submitted = st.form_submit_button("Execute Query")
     if submitted:
@@ -265,12 +264,12 @@ with st.form("query_form", clear_on_submit=False):
         if st.session_state.query_mode == "Retrieval":
             logger.info("Running Retriever engine")
             with st.status("Running Retriever engine"):
-                result = engine.retriever_engine.query(user_query)
+                result = engine.retriever_engine.query(QueryBundle(user_query))
                 result.response = 'No LLM response in "Retrieval" query mode.'
         else:
             logger.info("Running Retrieval Augmented Generation (RAG) engine")
             with st.status("Running Retrieval Augmented Generation (RAG) engine"):
-                result = engine.query_engine.query(user_query)
+                result = engine.query_engine.query(QueryBundle(user_query))
                 st.session_state.last_llm_prompt_text = (
                     llm_prompt_text  # Set the last llm_prompt_text
                 )
