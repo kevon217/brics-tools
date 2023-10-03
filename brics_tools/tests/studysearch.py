@@ -112,8 +112,12 @@ engine = StudyInfoQueryEngine(cfg)
 engine.init_vector_index()
 # engine.init_node_postprocessors()
 
-rtrvr = engine.create_retriever_only_engine(similarity_top_k=5, response_mode="no_text")
-rag = engine.create_retriever_query_engine()
+rtrvr = engine.create_retriever_only_engine(
+    similarity_top_k=10, rerank_top_n=None, limit_top_n=5
+)
+rag = engine.create_retriever_query_engine(
+    similarity_top_k=10, rerank_top_n=None, limit_top_n=5
+)
 rtrvr = engine.retriever_engine
 rag = engine.query_engine
 

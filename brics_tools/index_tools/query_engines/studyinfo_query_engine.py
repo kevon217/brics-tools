@@ -35,9 +35,9 @@ from brics_tools.index_tools.index_managers.studyinfo_vectorstore_manager import
     StudyInfoVectorStoreIndexManager,
 )
 
-# from brics_tools.index_tools.node_postprocessors.studyinfo_node_postprocessor import (
-#     NodePostprocessorCosineSimilarityTempFix,
-# )
+from brics_tools.index_tools.node_postprocessors.studyinfo_node_postprocessor import (
+    TopNForLLMSynthesisNodePostprocessor,
+)
 from brics_tools.index_tools.prompts.studyinfo_prompts import STUDYINFO_QA_PROMPT
 from brics_tools.index_tools.service_contexts.api_key_context_manager import (
     use_openai_api_key,
@@ -113,7 +113,7 @@ class StudyInfoQueryEngine:
         self.retriever = retriever
         # return retriever
 
-    def init_node_postprocessors(self, rerank_top_n=None):
+    def init_node_postprocessors(self, rerank_top_n=None, top_n_for_llm=None):
         rerank_top_n = (
             rerank_top_n
             or self.config.query_engines.studyinfo_query_engine.node_postprocessors.rerank.cross_encoder.top_n
@@ -121,11 +121,21 @@ class StudyInfoQueryEngine:
         logger.info(
             f"Initializing Node Postprocessors with rerank_top_n = {rerank_top_n}"
         )
+        top_n_for_llm = (
+            top_n_for_llm
+            or self.config.query_engines.studyinfo_query_engine.node_postprocessors.limit.top_n
+        )
+        logger.info(
+            f"Initializing Node Postprocessors with top_n_for_llm = {top_n_for_llm}"
+        )
         node_postprocessors = [
             SentenceTransformerRerank(
                 model=self.config.query_engines.studyinfo_query_engine.node_postprocessors.rerank.cross_encoder.model_name,
                 top_n=rerank_top_n,
-            )
+            ),
+            TopNForLLMSynthesisNodePostprocessor(
+                rerank_top_n, top_n_for_llm=top_n_for_llm
+            ),
         ]  # TODO: add classes to config for more flexibility
         self.node_postprocessors = node_postprocessors
         # return node_postprocessors
@@ -178,7 +188,9 @@ class StudyInfoQueryEngine:
     ):
         logger.info("Creating Retriever-only Engine")
         self.init_vector_retriever(similarity_top_k=similarity_top_k)
-        self.init_node_postprocessors(rerank_top_n=rerank_top_n)
+        self.init_node_postprocessors(
+            rerank_top_n=rerank_top_n, top_n_for_llm=rerank_top_n
+        )  # #HACK: setting to rerank_top_n since no need for llm
         # synthesizer = self.init_response_synthesizer(response_mode=response_mode,text_qa_template=text_qa_template)
 
         retriever_engine = RetrieverQueryEngine(
@@ -197,6 +209,7 @@ class StudyInfoQueryEngine:
         temperature=None,
         similarity_top_k=None,
         rerank_top_n=None,
+        top_n_for_llm=None,
         response_mode=None,
         text_qa_template=None,
     ):
@@ -204,7 +217,9 @@ class StudyInfoQueryEngine:
         self.init_llm(model_name=model_name, temperature=temperature)
         self.init_service_context()
         self.init_vector_retriever(similarity_top_k=similarity_top_k)
-        self.init_node_postprocessors(rerank_top_n=rerank_top_n)
+        self.init_node_postprocessors(
+            rerank_top_n=rerank_top_n, top_n_for_llm=top_n_for_llm
+        )
         self.init_response_synthesizer(
             response_mode=response_mode, text_qa_template=text_qa_template
         )

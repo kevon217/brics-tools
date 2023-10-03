@@ -14,11 +14,13 @@ studyinfo_query_engine:
     custom:
     rerank:
       cross_encoder:
-        model_name:  "cross-encoder/ms-marco-MiniLM-L-12-v2" # "cross-encoder/stsb-distilroberta-base"
+        model_name:  "cross-encoder/stsb-distilroberta-base" # "cross-encoder/ms-marco-MiniLM-L-12-v2"
         top_n: 10
+    limit:
+      top_n: 10
   llm:
     llm_service: "OpenAI"  # or "AnotherService"
     llm_kwargs:
-      model_name: gpt-4 #"gpt-3.5-turbo-16k"
+      model_name: "gpt-3.5-turbo-16k" # gpt-4
       temperature: 0.1
       context_window: 4096
