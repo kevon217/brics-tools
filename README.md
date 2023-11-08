@@ -1,4 +1,4 @@
-# brics-tools -> studysearch_app
+# studysearch_app.py
 
 ## Table of Contents
 - [Description](#description)
