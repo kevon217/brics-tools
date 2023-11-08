@@ -305,13 +305,13 @@ def main():
             data = {
                 "Study Title": study_titles,
                 "Study ID": study_ids,
-                "Similarity Distance": similarity_scores,
+                "Cosine Similarity": similarity_scores,
                 "Abstract": study_abstracts,
             }
 
             df = pd.DataFrame(data)
             df = df.sort_values(
-                by=["Similarity Distance"], ascending=False
+                by=["Cosine Similarity"], ascending=False
             ).reset_index(drop=True)
             st.session_state.df = df
 

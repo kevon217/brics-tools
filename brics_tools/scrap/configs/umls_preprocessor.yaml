@@ -1,0 +1,13 @@
+umls_preprocessor:
+  filters:
+    LAT: ['ENG']
+  null_value_cols: ['STR', 'DEF']
+  text_cleaning_cols: ['STR','DEF']
+  merge:
+    additional_df_path: 'path/to/additional_df.pkl'
+    merge_cols: ['CUI']
+  rank:
+    rank_df_path: 'path/to/rank_df.pkl'
+    rank_col: 'YOUR_RANK_COLUMN_HERE'
+  drop_duplicates:
+    subset_cols: ['CUI']

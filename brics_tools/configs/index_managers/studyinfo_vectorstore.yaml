@@ -1,8 +1,8 @@
 studyinfo_vectorstore_index:
   index_id: 'FITBIR-Data-Repository_VectorStoreIndex'
-  filepath_input: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/storage/data_repository/studies.csv'
+  filepath_input: 'C:/Users/Kevin/Desktop/Coding/BRICS/brics-tools/storage/data_repository/studies.csv'
   storage_context:
-    storage_path_root: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/storage/data_repository/'
+    storage_path_root: 'C:/Users/Kevin/Desktop/Coding/BRICS/brics-tools/storage/data_repository/'
     storage_paths_indices:
   summary: "FITBIR Data Repository Study Information"
   collections:

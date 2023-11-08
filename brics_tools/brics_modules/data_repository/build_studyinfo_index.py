@@ -26,9 +26,9 @@ from brics_tools.index_tools.node_parsers.studyinfo_node_parser import (
 from brics_tools.index_tools.index_managers.studyinfo_vectorstore_manager import (
     StudyInfoVectorStoreIndexManager,
 )
-from brics_tools.index_tools.index_managers.studyinfo_summary_manager import (
-    StudyInfoSummaryIndexManager,
-)
+# from brics_tools.index_tools.index_managers.studyinfo_summary_manager import (
+#     StudyInfoSummaryIndexManager,
+# )
 from brics_tools.index_tools.index_loaders.studyinfo_index_loader import (
     StudyInfoVectorStoreIndexLoader,
 )

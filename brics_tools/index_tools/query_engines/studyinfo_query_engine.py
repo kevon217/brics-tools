@@ -28,9 +28,9 @@ from llama_index.schema import MetadataMode
 from llama_index.callbacks import CallbackManager, OpenInferenceCallbackHandler
 from llama_index.prompts import PromptTemplate
 
-from brics_tools.index_tools.index_managers.studyinfo_summary_manager import (
-    StudyInfoSummaryIndexManager,
-)
+# from brics_tools.index_tools.index_managers.studyinfo_summary_manager import (
+#     StudyInfoSummaryIndexManager,
+# )
 from brics_tools.index_tools.index_managers.studyinfo_vectorstore_manager import (
     StudyInfoVectorStoreIndexManager,
 )

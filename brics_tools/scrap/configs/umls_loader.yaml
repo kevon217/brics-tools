@@ -1,0 +1,22 @@
+umls_loader:
+  settings:
+    dirpath_output: 'C:\Users\armengolkm\Desktop\Full Pipeline Test v1.1.0\UMLS_subset\raw'
+  mth_local:
+    dirpath_mth: 'C:\Users\armengolkm\Documents\BRICS\Data_Elements_Form_Structures\UMLS\umls-2022AB-full\2022AB-full\2022AB\META'
+    RRF_files:
+      concepts:
+        filename: MRCONSO.RRF
+        columns: ['CUI', 'LAT', 'TS', 'LUI', 'STT', 'SUI', 'ISPREF', 'AUI', 'SAUI', 'SCUI', 'SDUI', 'SAB', 'TTY', 'CODE', 'STR', 'SRL', 'SUPPRESS', 'CVF', 'empty']
+        subset: ['CUI',  'LAT', 'SAB', 'STR', 'TTY']
+      definitions:
+        filename: MRDEF.RRF
+        columns: ['CUI', 'AUI', 'ATUI', 'SATUI', 'SAB', 'DEF', 'SUPPRESS', 'CVF', 'empty']
+        subset: ['CUI', 'SAB', 'DEF']
+      semantic_types:
+        filename: MRSTY.RRF
+        columns: ['CUI', 'TUI', 'STN', 'STY', 'ATUI', 'CVF', 'empty']
+        subset: ['CUI', 'STY']
+      termtype_rank:
+        filename: MRRANK.RRF
+        columns: ['index','TUI', 'TTY', 'SUPPRESS', 'empty']
+        subset: ['TUI', 'TTY']

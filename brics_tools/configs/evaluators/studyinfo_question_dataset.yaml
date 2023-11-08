@@ -18,5 +18,5 @@ studyinfo_question_dataset:
         context_window: 4096
       chunk_size: 1024
   storage_context:
-    storage_path_root: 'C:/Users/armengolkm/Desktop/VS_Code_Projects/BRICS/brics-tools/examples/data_repository/storage/evaluation'
+    storage_path_root: 'C:/Users/Kevin/Desktop/Coding/BRICS/brics-tools/examples/data_repository/storage/evaluation'
     filename: 'studyinfo_question_dataset.txt'
